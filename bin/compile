@@ -129,16 +129,12 @@ if [ -d "$ENV_DIR" ]; then
     fi
 fi
 
-BUILD_COMMAND="lein ring uberjar"
-
-echo "       Running: $BUILD_COMMAND"
-
+echo "-----> Generating tar with Leiningen:"
+echo "       Running: lein ring uberjar"
 cd $BUILD_DIR
-PATH=.lein/bin:$PATH JVM_OPTS="-Xmx600m" \
-  LEIN_JVM_OPTS="-Xmx400m -Duser.home=$BUILD_DIR" \
-  $BUILD_COMMAND 2>&1 | sed -u 's/^/       /'
+PATH=.lein/bin:/usr/local/bin:/usr/bin:/bin JAVA_OPTS="-Xmx500m -Duser.home=$BUILD_DIR" lein ring uberjar 2>&1 | sed -u 's/^/       /'
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-  echo " !     Failed to build."
+  echo " !     Failed to create tar with Leiningen"
   exit 1
 fi
 
