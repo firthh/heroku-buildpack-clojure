@@ -129,15 +129,7 @@ if [ -d "$ENV_DIR" ]; then
     fi
 fi
 
-# Calculate build command
-if [ "$BUILD_COMMAND" = "" ]; then
-    if [ -x $BUILD_DIR/bin/build ]; then
-        echo "       Found bin/build; running it instead of default lein invocation."
-        BUILD_COMMAND=bin/build
-    else
-        BUILD_COMMAND="lein $LEIN_BUILD_TASK"
-    fi
-fi
+BUILD_COMMAND="lein ring uberjar"
 
 echo "       Running: $BUILD_COMMAND"
 
